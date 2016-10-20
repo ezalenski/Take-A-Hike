@@ -174,16 +174,17 @@ public class MapDataDrawer {
      * and ending at the last column using Dijkstra's algorithm.
      *
      * @param g
-     * @param row
      * @return
      */
-    public int drawOptimalPath(Graphics g, int row) {
+    public int drawOptimalPath(Graphics g) {
         PriorityQueue<Node> pq = new PriorityQueue<>();
         HashMap<String, Node> map = initHashMap();
 
-        Node start = map.get(Integer.toString(row) + " 0");
-        start.deltaElev = 0;
-        pq.add(start);
+        for (int i = 0; i < rows; i++) {
+            Node start = map.get(Integer.toString(i) + " 0");
+            start.deltaElev = 0;
+            pq.add(start);
+        }
 
         while (!pq.isEmpty()) {
             Node curr = pq.poll();
@@ -275,27 +276,6 @@ public class MapDataDrawer {
      */
     private int getElevation(int x, int y) {
         return grid[x][y];
-    }
-
-    /**
-     * tries every possible row in the first column for dijkstra's and returns the row for the best
-     * path.
-     *
-     * @param g
-     * @return
-     */
-    public int indexOfLowestOptPath(Graphics g) {
-        int min = Integer.MAX_VALUE;
-        int minRow = -1;
-        for (int row = 0; row < rows; row++) {
-            int diffElev = drawOptimalPath(g, row);
-            if (diffElev < min) {
-                min = diffElev;
-                minRow = row;
-            }
-
-        }
-        return minRow;
     }
 
     /**

@@ -5,12 +5,13 @@ public class Driver
 {
     
     public static void main(String[] args) throws IOException {
+        long begin = System.currentTimeMillis();
         //construct DrawingPanel, and get its Graphics context
-        DrawingPanel panel = new DrawingPanel(212, 117);
+        DrawingPanel panel = new DrawingPanel(3755, 884);
         Graphics g = panel.getGraphics();
         
         //Test Step 1 - construct mountain map data
-        MapDataDrawer map = new MapDataDrawer("NevadaToCalifornia.txt");
+        MapDataDrawer map = new MapDataDrawer("Asia.txt");
 
         //Test Step 2 - min, max, minRow in col
         int min = map.findMinValue();
@@ -24,7 +25,6 @@ public class Driver
 
         g.setColor(Color.RED);
         int bestGreedyRow = map.indexOfLowestElevPath(g);
-        int bestDijkRow = map.indexOfLowestOptPath(g);
 
         //Test Step 3 - draw the map
         map.drawMap(g);
@@ -41,7 +41,8 @@ public class Driver
         totalChange = map.drawLowestElevPath(g, bestGreedyRow);
         System.out.println("The Lowest-Elevation-Change Path starts at row: "+bestGreedyRow+" and gives a total change of: "+totalChange);
         g.setColor(Color.BLUE);
-        totalChange = map.drawOptimalPath(g, bestDijkRow);
-        System.out.println("The Lowest-Elevation-Change Path starts at row: "+bestDijkRow+" and gives a total change of: "+totalChange);
+        totalChange = map.drawOptimalPath(g);
+        System.out.println("The Lowest-Elevation-Change Path gives a total change of: "+totalChange);
+        System.out.println("Time to compute took " + (System.currentTimeMillis() - begin)/1000 + "s");
     }
 }
